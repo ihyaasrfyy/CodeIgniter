@@ -2,40 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Cek Composer') {
             steps {
-                git branch: 'develop', url: 'https://github.com/ihyaasrfyy/CodeIgniter.git'
+                bat '"C:\\composer\\composer.bat" --version'
             }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                // Gunakan path Composer yang benar
-                bat '"C:\\composer\\composer.bat" install --no-dev --optimize-autoloader'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'echo Running tests...'
-                // Tambahkan command unit test di sini kalau sudah ada
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                bat 'echo Deploying application...'
-                // Tambahkan skrip deploy ke server atau folder tujuan
-            }
-        }
-    }
-
-    post {
-        failure {
-            echo 'Pipeline failed!'
-        }
-        success {
-            echo 'Pipeline completed successfully!'
         }
     }
 }
