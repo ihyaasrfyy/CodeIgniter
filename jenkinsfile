@@ -1,22 +1,29 @@
 pipeline {
     agent any
+
     environment {
         CI_ENV = 'production'
     }
+
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'develop', url: 'https://github.com/ihyaasrfyy/CodeIgniter.git'
             }
         }
+
         stage('Install Dependencies') {
+            environment {
+                PATH = "C:\\ProgramData\\ComposerSetup\\bin;${env.PATH}" // ← ini yang ditambahkan
+            }
             steps {
                 bat 'composer install --no-dev --optimize-autoloader'
             }
         }
+
         stage('Run Tests') {
             steps {
-                bat 'phpunit'
+                bat 'vendor\\bin\\phpunit'
             }
             post {
                 success {
@@ -27,13 +34,15 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying to production environment...'
-                // Tambahkan perintah deploy Windows di sini
+                // Tambahkan perintah deploy sesuai kebutuhan
             }
         }
     }
+
     post {
         success {
             echo 'Pipeline completed successfully!'
