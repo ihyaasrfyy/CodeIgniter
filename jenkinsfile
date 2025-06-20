@@ -10,7 +10,7 @@ pipeline {
 
         stage('Install Dependencies') {
             environment {
-                PATH = "C:\\composer;${env.PATH}"
+                PATH = "C:\\xampp\\php;C:\\composer;${env.PATH}"
             }
             steps {
                 bat 'composer install --no-dev --optimize-autoloader'
@@ -19,13 +19,14 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'vendor\\bin\\phpunit'
+                bat 'phpunit --configuration phpunit.xml'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy tahap akhir di sini...'
+                echo 'Deploying application...'
+                // Tambahkan perintah deploy kalau ada
             }
         }
     }
@@ -33,9 +34,6 @@ pipeline {
     post {
         failure {
             echo 'Pipeline failed!'
-        }
-        success {
-            echo 'Pipeline succeeded!'
         }
     }
 }
