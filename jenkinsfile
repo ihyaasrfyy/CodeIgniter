@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'php vendor/bin/phpunit'
+                sh 'phpunit'
             }
             post {
                 success {
@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to production environment...'
-                // Tambahkan perintah deploy sesuai kebutuhan Anda
+                // Tambahkan perintah deploy sesuai kebutuhan
             }
         }
     }
