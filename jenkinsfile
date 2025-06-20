@@ -1,11 +1,42 @@
 pipeline {
     agent any
 
+    environment {
+        COMPOSER_HOME = 'C:\\composer'
+        PATH = "C:\\composer;${env.PATH}"
+    }
+
     stages {
-        stage('Cek Composer') {
+        stage('Checkout') {
             steps {
-                bat '"C:\\composer\\composer.bat" --version'
+                git branch: 'develop', url: 'https://github.com/ihyaasrfyy/CodeIgniter.git'
             }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Pakai full path supaya Jenkins gak bingung
+                bat '"C:\\composer\\composer.bat" install --no-dev --optimize-autoloader'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'echo Running tests...'
+                // ganti nanti dengan: vendor\\bin\\phpunit atau perintah test kamu
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'echo Deploying application...'
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
