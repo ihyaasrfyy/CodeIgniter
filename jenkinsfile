@@ -13,7 +13,7 @@ pipeline {
                 PATH = "C:\\xampp\\php;C:\\composer;${env.PATH}"
             }
             steps {
-                bat 'composer install --no-dev --optimize-autoloader'
+                bat 'composer install --optimize-autoloader'
             }
         }
 
